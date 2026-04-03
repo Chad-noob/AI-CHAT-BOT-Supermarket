@@ -14,18 +14,18 @@ export function WelcomeTransition({ onComplete }) {
       textToSpeech.speak(welcomeMessage, 'en');
     }
 
-    // Show welcome text for 3.5 seconds
+    // Show welcome text
     const showTimer = setTimeout(() => {
       setIsFullyVisible(true);
-    }, 100);
+    }, 50);
 
     const exitTimer = setTimeout(() => {
       setStartExit(true);
-    }, 2500);
+    }, 1500);
 
     const completeTimer = setTimeout(() => {
       onComplete();
-    }, 2800);
+    }, 1800);
 
     return () => {
       clearTimeout(showTimer);

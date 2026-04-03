@@ -19,22 +19,20 @@ export function GreetingAnimation({ onComplete }) {
   useEffect(() => {
     if (currentIndex >= greetings.length) {
       // All greetings shown, complete the animation
-      setTimeout(() => {
-        onComplete();
-      }, 400);
+      onComplete();
       return;
     }
 
-    // Show greeting for 350ms (faster)
+    // Show greeting for 200ms (much faster)
     const showTimer = setTimeout(() => {
       setIsVisible(false);
-    }, 350);
+    }, 200);
 
-    // Move to next greeting after 450ms (includes fade out)
+    // Move to next greeting after 250ms (includes fade out)
     const nextTimer = setTimeout(() => {
       setIsVisible(true);
       setCurrentIndex(currentIndex + 1);
-    }, 450);
+    }, 250);
 
     return () => {
       clearTimeout(showTimer);
