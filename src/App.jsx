@@ -51,13 +51,36 @@ function App() {
     setShowFullAssistant(true);
   };
 
-  // Logic to find a matching product from the AI response string
-  const getProductFromResult = () => {
+  // Logic to find matching products from the AI response string
+  const getProductsFromResult = () => {
     if (!response) return null;
     const lowerResponse = response.toLowerCase();
-    const found = products.find(p => lowerResponse.includes(p.name.toLowerCase()));
-    if (found) {
-      return <ProductCard key={found.id} product={found} />;
+    
+    // Find ALL products mentioned in the response
+    const mentionedProducts = products.filter(p => {
+      const name = p.name.toLowerCase();
+      // Check for exact name match
+      if (lowerResponse.includes(name)) return true;
+      
+      // Check for common variations or partial matches
+      const variations = [
+        name.replace(/s$/, ''), // singular form
+        name.split(' ')[0],    // first word (e.g., "Wheat" for "Wheat Flour")
+      ];
+      
+      return variations.some(v => v.length > 3 && lowerResponse.includes(v));
+    });
+
+    if (mentionedProducts.length > 0) {
+      return (
+        <div className="flex flex-wrap justify-center gap-6 mt-8 animate-fade-in p-4 custom-scrollbar">
+          {mentionedProducts.map(product => (
+            <div key={product.id} className="w-[320px] shrink-0 transform hover:scale-105 transition-all duration-300">
+              <ProductCard product={product} isFloating={true} />
+            </div>
+          ))}
+        </div>
+      );
     }
     return null;
   };
@@ -89,7 +112,7 @@ function App() {
           toggleListening={toggleListening}
           selectedLanguage={selectedLanguage}
           onLanguageChange={handleLanguageChange}
-          foundProduct={getProductFromResult()}
+          foundProduct={getProductsFromResult()}
         />
       )}
 

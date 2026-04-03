@@ -1,6 +1,8 @@
 // Universal Language Detection and Response System
 // Supports 100+ languages automatically
 
+import { products } from './products.js';
+
 // Browser language codes to human names
 const LANGUAGE_NAMES = {
   'en': 'English',
@@ -209,22 +211,24 @@ export function getLanguageName(langCode) {
   return LANGUAGE_NAMES[langCode] || langCode.toUpperCase() || 'Auto';
 }
 
-/**
- * Get system prompt based on language
- * @param {string} langCode - ISO language code (e.g., 'en', 'ta', 'hi', 'fr')
- * @returns {string} - System prompt for the LLM
- */
 export function getSystemPrompt(langCode) {
   // Normalize: Marathi uses same script as Hindi
   if (langCode === 'mr') langCode = 'hi';
   
-
+  const productList = products.map(p => `${p.name} (Aisle ${p.aisle}, ₹${p.price}/${p.unit})`).join(', ');
 
   const basePrompt = `You are a supermarket assistant for AisleMart.
-Help customers find products with information.
-Products: Basmati Rice (p1), Milk (p9), Yogurt (p11), Paneer (p12), Tomatoes (p16), Potatoes (p18).
-Offers: Buy 2 rice get 1 free. 20% off dairy.
-Keep responses under 20 words.`;
+Help customers find products and their prices.
+
+AVAILABLE PRODUCTS:
+${productList}
+
+RULES:
+1. ALWAYS mention the full product name exactly as listed above (e.g., "Wheat Flour (Atta)" instead of just "Atta").
+2. ALWAYS mention the Aisle number.
+3. Keep responses under 20 words.
+
+OFFERS: Buy 2 rice get 1 free. 20% off dairy.`;
 
   // Language-specific instructions with ABSOLUTE priority and examples
   const languageInstructions = {

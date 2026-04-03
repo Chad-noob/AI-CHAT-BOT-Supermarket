@@ -112,10 +112,8 @@ export function VoiceAssistantUI({
 
           {/* Dynamic Product Reveal */}
           {foundProduct && (
-            <div className="mt-12 animate-slide-up [animation-delay:400ms] flex justify-center">
-              <div className="w-[280px] transform hover:scale-105 transition-transform duration-500 shadow-2xl shadow-indigo-500/20 rounded-2xl overflow-hidden ring-1 ring-white/20">
-                 {foundProduct}
-              </div>
+            <div className="mt-8 animate-slide-up [animation-delay:400ms] w-full max-w-5xl mx-auto overflow-y-auto max-h-[50vh] px-4 custom-scrollbar pb-12">
+              {foundProduct}
             </div>
           )}
         </div>

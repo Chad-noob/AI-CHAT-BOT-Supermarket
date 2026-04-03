@@ -70,26 +70,35 @@ body {
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar {
+.custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 3px;
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(16, 185, 129, 0.3); /* Emerald green for scrollbar */
-  border-radius: 3px;
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.2);
+  border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(16, 185, 129, 0.5);
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.4);
 }
 
-/* Pulsing shadow for microphone */
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3s ease infinite;
+}
+
+/* Hide scrollbar for categories but allow scroll */
 @keyframes glow {
   0% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.5); }
   50% { box-shadow: 0 0 35px rgba(34, 197, 94, 0.8), 0 0 100px rgba(34, 197, 94, 0.3); }
