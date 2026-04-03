@@ -8,20 +8,24 @@ export function WelcomeTransition({ onComplete }) {
   useEffect(() => {
     // Speak welcome message
     const welcomeMessage = "Welcome to AisleMart. I'm your voice assistant. Ask me anything about our products!";
-    textToSpeech.speak(welcomeMessage, 'en');
+    
+    // Check if Sarvam is already busy or if this is a double-mount
+    if (!textToSpeech.getIsSpeaking()) {
+      textToSpeech.speak(welcomeMessage, 'en');
+    }
 
     // Show welcome text for 3.5 seconds
     const showTimer = setTimeout(() => {
       setIsFullyVisible(true);
-    }, 300);
+    }, 100);
 
     const exitTimer = setTimeout(() => {
       setStartExit(true);
-    }, 3500);
+    }, 2500);
 
     const completeTimer = setTimeout(() => {
       onComplete();
-    }, 3800);
+    }, 2800);
 
     return () => {
       clearTimeout(showTimer);

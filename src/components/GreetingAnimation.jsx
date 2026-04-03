@@ -21,20 +21,20 @@ export function GreetingAnimation({ onComplete }) {
       // All greetings shown, complete the animation
       setTimeout(() => {
         onComplete();
-      }, 800);
+      }, 400);
       return;
     }
 
-    // Show greeting for 500ms
+    // Show greeting for 350ms (faster)
     const showTimer = setTimeout(() => {
       setIsVisible(false);
-    }, 500);
+    }, 350);
 
-    // Move to next greeting after 600ms (includes fade out)
+    // Move to next greeting after 450ms (includes fade out)
     const nextTimer = setTimeout(() => {
       setIsVisible(true);
       setCurrentIndex(currentIndex + 1);
-    }, 600);
+    }, 450);
 
     return () => {
       clearTimeout(showTimer);
