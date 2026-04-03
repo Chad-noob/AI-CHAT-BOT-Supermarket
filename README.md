@@ -1,49 +1,76 @@
-Aisle Mart - AI Voice Assistant Supermarket
+AisleMart: Voice-First Premium Retail OS
 
-AisleMart is a modern, voice-first supermarket information assistant designed to provide a seamless and intuitive shopping experience. Users can ask questions in multiple languages to find product locations, check prices, and discover current offers. The interface features a cinematic, full-screen voice assistant mode with a premium, glassmorphism design.
+AisleMart is a highly optimized, multilingual voice assistant designed for the next generation of retail environments. It enables a "hands-free" shopping experience using advanced speech-to-text, real-time LLM processing, and high-fidelity Indian-language TTS.
 
-This project was built with React, Vite, and Tailwind CSS, and integrates with advanced AI services for natural language understanding (Groq, OpenRouter) and speech synthesis (Sarvam AI, Web Speech API).
-Key Features
- Voice-First Interaction: A full-screen, immersive voice assistant interface.
- Multi-Language Support: Automatically detects and responds in multiple languages including English, Hindi, Tamil, Telugu, and more.
- AI-Powered Responses: Utilizes powerful LLMs (Llama 3 via Groq) to provide natural and accurate answers about products and offers.
- Premium UI/UX: A modern, "glassmorphism" design with smooth animations, glowing effects, and a responsive layout.
- Cinematic Entry Flow: A unique greeting animation that cycles through "Hello" in various languages, followed by a spoken welcome message.
- Dynamic Product Cards: Visually displays product cards in the UI whenever a product is mentioned by the AI.
- Fast & Performant: Built with Vite for a lightning-fast development experience and optimized production builds.
- 
- Tech Stack
-Frontend: React 18, Vite, Tailwind CSS
-State Management: React Hooks & Context API
-AI & Language Models:
-LLM: Groq (primary, for speed) & OpenRouter (fallback)
-Speech Recognition: Web Speech API (SpeechRecognition)
-Text-to-Speech (TTS): Sarvam AI (for Indian languages) & Web Speech API (SpeechSynthesis)
-Deployment: Ready for Vercel, Netlify, or any static host.
+---
 
- Getting Started
-Follow these instructions to get the project up and running on your local machine.
+## Technical Architecture
 
-Prerequisites
-Node.js (v18.x or higher)
-npm or yarn
-1. Clone the Repository
-2. Install Dependencies
-3. Set Up Environment Variables
-Create a .env file in the root of your project by copying the example file:
+AisleMart operates as a sophisticated pipeline of three core phases: **Perception**, **Cognition**, and **Sensation**.
 
-Now, open the .env file and add your API keys. You need at least one of the following:
+ 1. Perception (Speech-to-Text)
+The system leverages the **Web Speech API** for ultra-low latency recognition.
+- **Continuous Listening**: The assistant maintains an active `webkitSpeechRecognition` state, specifically tuned for short retail phrases.
+- **Multilingual Support**: Automatically detects and switches between English, Hindi, Tamil, Telugu, Malayalam, Kannada, and Marathi.
+- **Smart Thresholding**: Filters background noise and only triggers processing when meaningful transcripts are generated.
 
-Note: The application will prioritize Groq for its speed. OpenRouter is used as a fallback.
+### 2. Cognition (LLM Intelligence)
+Once the transcript is ready, it is routed through a high-performance LLM pipeline:
+- **Primary Model**: `llama-3.1-8b-instant` (via Groq) for sub-second response times.
+- **Context Injection**: Every query is augmented with a real-time product database including prices, aisles, and stock status.
+- **Smart Product Identification**: A custom regex-based matching algorithm in the client-side `App.jsx` parses the AI's response to extract product IDs and dynamically render corresponding UI cards.
+- **Fallback Logic**: Implements an automatic transition to **OpenRouter** (Claude-3/Mistral-Large) if the primary API experiences latency spikes.
 
-4. Run the Development Server
-The application will be available at http://localhost:5173.
+### 3. Sensation (TTS & UI Rendering)
+The final stage transforms the text into human-like audio and visual feedback.
+- **Sarvam AI TTS**: Utilizes specialized Indian-language models to provide natural, accent-accurate audio responses.
+- **Glassmorphic UI Engine**: Built with **React 19** and **Tailwind CSS 4**. Uses high-performance CSS animations (via `framer-motion` concepts) for localized product reveals.
+- **Responsive Layout**: Adopts a mobile-first philosophy with modular components that adapt to different aspect ratios without losing the premium retail aesthetic.
 
-How It Works
-Greeting Flow: The app starts with GreetingAnimation.jsx, which transitions to WelcomeTransition.jsx.
-Voice UI: After the welcome, App.jsx renders the main VoiceAssistantUI.jsx.
-Speech Recognition: The useVoiceAssistant.js hook captures user audio via the Web Speech API.
-LLM Service: The transcribed text is sent to llmService.js, which queries the Groq API for a response.
-Product Matching: App.jsx scans the AI's text response for product keywords (from products.js).
-Dynamic Rendering: If a product is found, its ProductCard.jsx is rendered in the center of the voice UI.
-Text-to-Speech: The AI's response is spoken aloud using textToSpeech.js, which leverages Sarvam AI for regional languages or the browser's default for others.
+---
+
+## Stack & Specifications
+
+| Component | Technology | Role |
+| :--- | :--- | :--- |
+| **Frontend** | React 19 + Vite 8 | Core framework & high-speed build tool |
+| **Styling** | Tailwind CSS 4 | Utility-first styling with modern glassmorphism |
+| **Brain** | Llama 3.1 8B (Groq) | Ultra-fast LLM for retail intent parsing |
+| **Speech** | Web Speech API | Client-side real-time transcription |
+| **Voice** | Sarvam AI | Specialized Indian TTS (Hindi, Tamil, etc.) |
+| **State** | Custom Context Hooks | Managing conversation history and language state |
+
+---
+
+## Operational Flow
+
+1.  **Wake Phase**: User says a product name or asks a question.
+2.  **Detection**: `languageDetector.js` identifies the script/language and selects the matching system prompt.
+3.  **Inference**: The query is sent to Groq. Max tokens are capped at 80-100 to ensure <1s TTFT (Time to First Token).
+4.  **UI Sync**: `ProductCard.jsx` instances are generated based on parsed tokens from the LLM output.
+5.  **Audio Sync**: The voice begins speaking simultaneously with the UI animation to minimize perceived latency.
+
+---
+
+## 📋 Installation & Setup
+
+1. **Clone & Install**:
+   ```bash
+   npm install
+   ```
+
+2. **Environment Configuration**:
+   Create a `.env` file with:
+   ```env
+   VITE_GROQ_API_KEY=your_key
+   VITE_OPENROUTER_API_KEY=your_key
+   VITE_SARVAM_API_KEY=your_key
+   ```
+
+3. **Launch**:
+   ```bash
+   npm run dev
+   ```
+
+---
+*Developed as a high-performance prototype for AisleMart Premium Retail OS.*
