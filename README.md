@@ -52,7 +52,7 @@ The final stage transforms the text into human-like audio and visual feedback.
 
 ---
 
-## 📋 Installation & Setup
+##  Installation & Setup
 
 1. **Clone & Install**:
    ```bash
