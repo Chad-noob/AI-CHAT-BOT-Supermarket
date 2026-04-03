@@ -59,16 +59,15 @@ function App() {
     // Find ALL products mentioned in the response
     const mentionedProducts = products.filter(p => {
       const name = p.name.toLowerCase();
-      // Check for exact name match
-      if (lowerResponse.includes(name)) return true;
+      const responseText = lowerResponse.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, " ");
       
-      // Check for common variations or partial matches
-      const variations = [
-        name.replace(/s$/, ''), // singular form
-        name.split(' ')[0],    // first word (e.g., "Wheat" for "Wheat Flour")
-      ];
+      // Check for exact name match or key parts of the name
+      const nameParts = name.split(' ').filter(part => part.length > 3);
       
-      return variations.some(v => v.length > 3 && lowerResponse.includes(v));
+      const hasMatch = responseText.includes(name) || 
+                       nameParts.some(part => responseText.includes(part));
+      
+      return hasMatch;
     });
 
     if (mentionedProducts.length > 0) {

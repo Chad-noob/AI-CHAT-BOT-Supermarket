@@ -94,17 +94,17 @@ export function VoiceAssistantUI({
         </div>
 
         {/* Response Area */}
-        <div className="text-center space-y-8 w-full">
+        <div className="text-center space-y-6 md:space-y-8 w-full px-4 overflow-y-auto max-h-[60vh] custom-scrollbar">
           {!response && !transcript && !processing && (
-            <h2 className="text-4xl md:text-5xl font-light text-white tracking-tight animate-fade-in">
+            <h2 className="text-3xl md:text-5xl font-light text-white tracking-tight animate-fade-in px-4">
               What can I <span className="font-semibold text-indigo-400 italic">help you</span> with today?
             </h2>
           )}
 
           {response && (
-             <div className="animate-slide-up bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-xl max-w-3xl mx-auto shadow-2xl relative group overflow-hidden">
+             <div className="animate-slide-up bg-white/5 border border-white/10 p-5 md:p-8 rounded-2xl md:rounded-3xl backdrop-blur-xl max-w-3xl mx-auto shadow-2xl relative group overflow-hidden mb-6">
                 <div className="absolute -left-1 top-0 bottom-0 w-1 bg-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.5)]"></div>
-                <p className="text-2xl md:text-3xl text-gray-100 font-light leading-relaxed">
+                <p className="text-lg md:text-2xl text-gray-100 font-light leading-relaxed">
                   {response}
                 </p>
              </div>
@@ -112,8 +112,10 @@ export function VoiceAssistantUI({
 
           {/* Dynamic Product Reveal */}
           {foundProduct && (
-            <div className="mt-8 animate-slide-up [animation-delay:400ms] w-full max-w-5xl mx-auto overflow-y-auto max-h-[50vh] px-4 custom-scrollbar pb-12">
-              {foundProduct}
+            <div className="mt-2 md:mt-4 animate-slide-up [animation-delay:400ms] w-full flex justify-center pb-12">
+              <div className="w-full max-w-5xl">
+                {foundProduct}
+              </div>
             </div>
           )}
         </div>
